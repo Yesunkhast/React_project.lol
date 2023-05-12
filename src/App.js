@@ -1,4 +1,5 @@
 import logo from './logo.svg';
+import CloseButton from 'react-bootstrap/CloseButton';
 // import Button from 'react-bootstrap/Button';
 import './App.css';
 import { Container, Form, InputGroup, Button } from 'react-bootstrap';
@@ -19,8 +20,12 @@ function App() {
     huis:  "Эр",
     code: "B222270047",
     mail: "Email@mail.com"
-    
   },]);
+
+  const  deleteItem =(id ) =>{
+    setArr(arr.filter(item => item.code !== id));
+
+  }
 
   return (
   <div>
@@ -100,6 +105,8 @@ function App() {
           />
         </Form.Group>
 
+        {/* <FormComponent value ="name"  /> */}
+
       <Button className='mx-auto m-4' onClick={() => {
       setArr([ ...arr, {
         lastName: name,
@@ -107,11 +114,10 @@ function App() {
         huis:  huis,
         code: code,
         mail: mail,
-        // school: `MHTS  ${arr.length}`,
       }]);
       // setArr("")
     } }>Add insert</Button>
-    <Button className='d-block' onClick={() => {setName("")}}>Clear</Button>
+    {/* <Button className='d-block' onClick={() => {setName("")}}>Clear</Button> */}
     </Form>
     <Table striped bordered hover>
       <thead>
@@ -135,11 +141,11 @@ function App() {
               <td>{e.huis}</td>
               <td>{e.code}</td>
               <td>{e.mail}</td>
+              <CloseButton aria-label="Hide" onClick={() => deleteItem(e.code)}/>
             </tr>
             )
           })
         }
-
       </tbody>
     </Table>
     </Container>
