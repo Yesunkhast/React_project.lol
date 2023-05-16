@@ -22,6 +22,7 @@ function App() {
     mail: "Email@mail.com"
   },]);
 
+  // ustgah func
   const  deleteItem =(id ) =>{
     setArr(arr.filter(item => item.code !== id));
 
