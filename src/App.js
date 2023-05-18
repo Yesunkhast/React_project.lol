@@ -1,11 +1,11 @@
-import logo from './logo.svg';
-import CloseButton from 'react-bootstrap/CloseButton';
-// import Button from 'react-bootstrap/Button';
+// import logo from './logo.svg';
 import './App.css';
-import { Container, Form, InputGroup, Button } from 'react-bootstrap';
+import { Container, Form ,  Table, Col , Row , CloseButton, Button, Dropdown, DropdownButton} from 'react-bootstrap';
 import { useState } from 'react';
-import { Table, Col, Row } from 'react-bootstrap';
+import { getByText } from '@testing-library/react';
+
 // import CloseButton from 'react-bootstrap/CloseButton';
+
 
 function App() {
 
@@ -13,147 +13,141 @@ function App() {
   const [school, setShcool] = useState("");
   const [huis, setHuis] = useState("");
   const [code, setCode] = useState("");
+  const [number, setNumber] = useState("");
   const [mail, setMail] = useState("");
   const [arr, setArr] = useState([{
     lastName: "Есөнхаст",
     school: "МХТС",
-    huis:  "Эр",
+    huis:  "Эрэгтэй",
     code: "B222270047",
-    mail: "Email@mail.com"
+    number: "99999999",
+    mail: "Email@gmail.com"
   },]);
 
   // ustgah func
-  const  deleteItem =(id ) =>{
-    setArr(arr.filter(item => item.code !== id));
+  const  deleteItem =( id , number) => {
+    setArr(arr.filter( item => item.code !== id ));
+  };
 
-  }
+  // emial shalgah
+  const checkAt = (e) => {
+      const arr = Array.from(e);
+      if(arr.indexOf("@") !== -1)
+      setMail(arr);
+      else alert("Email биш байна!!!");
+  };
+
+  // dugar num eseh
+  const checkNumber = (number) => {
+    const num = parseInt(number);
+    if(Number.isInteger(num))
+    setNumber(num);
+    else alert("Дугаар биш байна!!!");
+  };
 
   return (
-  <div>
+    <div>
+    <Form>
+    <Row>
+      <Col xs={7}>
+        <Form.Control placeholder="Овог Нэр" className='name'
+        onChange={value => {
+          setName(value.target.value);
+        }}
+        />
+      </Col>
+    </Row>
+    <Row>
+      <Col>
+        <Form.Control placeholder="Email" className='email'
+        onChange={value => {
+          checkAt(value.target.value)
+        }}
+        />
+      </Col>
+    </Row>
+    <Row>
+      <Col>
+        <Form.Control placeholder="Сургууль" className='school'  
+        onChange={value => {
+          setShcool(value.target.value);
+        }}
+        />
+      </Col>
+    </Row>
+    <Row>
+      <Col>
+        <Form.Control placeholder="Код" className='code'  
+        onChange={value => {
+          setCode(value.target.value);
+        }}
+        />
+      </Col>
+      </Row>
 
-        <Container className='m-4  align-items-center justify-content-center'>
-
-      {/* <h5>{arr.map((value, index) => <p key={index}>
-            {value.school} {value.lastName} {value.huis} 
-         </p>)}</h5> */}
-
-         <Form noValidate className='p-4'>
-        <Form.Group as={Col} md="4" controlId="validationCustom01">
-          <Form.Label>Нэр</Form.Label>
-          <Form.Control
-            required
-            type="text"
-            placeholder="Нэр"
-            onChange={(value) =>{
-              // if(value.target.value == "")
-              // setName("value.target.value")
-              // else
-              setName(value.target.value)
-              // setName("")
-            } }
-          />
-        </Form.Group>
-
-      <Form.Group as={Col} md="4" controlId="validationCustom02">
-          <Form.Label>Сургууль</Form.Label>
-          <Form.Control
-            required
-            type="text"
-            placeholder="Сургууль"
-            onChange={(value) =>{
-            setShcool(value.target.value)
-            } }
-          />
-          {/* <CloseButton onClick={setArr("")}/> */}
-        </Form.Group>
-
-        <Form.Group as={Col} md="4" controlId="validationCustom03">
-          <Form.Label>Оюутны код</Form.Label>
-          <Form.Control
-            required
-            type="text"
-            placeholder="Код"
-            onChange={(value) =>{
-            setCode(value.target.value)
-            } }
-          />
-          {/* <CloseButton onClick={setArr("")}/> */}
-        </Form.Group>
+      <Row>
+      <Col>
+        <Form.Control placeholder="Дугаар" className='number'  
+        onChange={value => {
+          checkNumber(value.target.value);
+        }}
+        />
+      </Col>
+    </Row>
 
 
-      <Form.Group as={Col} md="4" controlId="validationCustom04">
-          <Form.Label>Хүйс</Form.Label>
-          <Form.Control
-            required
-            type="text"
-            placeholder="Хүйс"
-            onChange={(value) =>{
-            setHuis(value.target.value)
-            } }
-          />
-        </Form.Group>
+    <Form.Select aria-label="Default select example" onChange={ (val) => {setHuis(val.target.value)}}>
+      <option value={"Эрэгтэй"}>Эрэгтэй</option>
+      <option value={"Эмэгтэй"}>Эмэгтэй</option>
+    </Form.Select>
 
+  </Form>
 
-      <Form.Group as={Col} md="4" controlId="validationCustom05">
-          <Form.Label>Имейл</Form.Label>
-          <Form.Control
-            required
-            type="text"
-            placeholder="Имейл"
-            onChange={(value) =>{
-            setMail(value.target.value)
-            } }
-          />
-        </Form.Group>
-
-        {/* <FormComponent value ="name"  /> */}
-
-      <Button className='mx-auto m-4' onClick={() => {
+  <Button className='mx-auto m-4' onClick={() => {
       setArr([ ...arr, {
         lastName: name,
         school: school,
-        huis:  huis,
+        huis: huis,
         code: code,
+        number: number,
         mail: mail,
       }]);
-      // setArr("")
     } }>Add insert</Button>
-    {/* <Button className='d-block' onClick={() => {setName("")}}>Clear</Button> */}
-    </Form>
-    <Table striped bordered hover>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Нэр</th>
-          <th>Сургууль</th>
-          <th>Хүйс</th>
-          <th>Код</th>
-          <th>Имейл</th>
-        </tr>
-      </thead>
-      <tbody>
-        {
-          arr.map((e , i) => {
-            return(
-              <tr>
-              <td>{i+1}</td>
-              <td>{e.lastName}</td>
-              <td>{e.school}</td>
-              <td>{e.huis}</td>
-              <td>{e.code}</td>
-              <td>{e.mail}</td>
-              <CloseButton aria-label="Hide" onClick={() => deleteItem(e.code)}/>
-            </tr>
-            )
-          })
-        }
-      </tbody>
-    </Table>
-    </Container>
 
-  </div>
-  );
-}
+<Table striped bordered hover>
+<thead>
+  <tr>
+    <th>#</th>
+    <th>Нэр</th>
+    <th>Сургууль</th>
+    <th>Хүйс</th>
+    <th>Код</th>
+    <th>Дугаар</th>
+    <th>Имейл</th>
+  </tr>
+</thead>
+<tbody>
+  {
+    arr.map((e , i) => {
+      return(
+        <tr>
+        <td>{i+1}</td>
+        <td>{e.lastName}</td>
+        <td>{e.school}</td>
+        <td>{e.huis}</td>
+        <td>{e.code}</td>
+        <td>{e.number}</td>
+        <td>{e.mail}</td>
+        <CloseButton aria-label="Hide" onClick={() => deleteItem(e.code, e.number)}/>
+      </tr>
+      )
+    })
+  }
+</tbody>
+</Table>
+</div>
+)
+};
 
 export default App;
  
